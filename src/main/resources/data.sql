@@ -1,3 +1,6 @@
+INSERT INTO user (display_name, password, username)
+VALUES ('Dung LV', '$2a$10$ZKh6m8OjhoTa63/sabOPFune7ctqIRFKofdweB4tIXqooUpHhkBAy', 'dunglv');
+
 INSERT INTO customer (firstname, lastname, gender, id_number, issue_date, issue_by)
 VALUES ('Nguyen Van', 'A', 'MALE', '024202007168', '2024-03-19', 'CA Ha Noi');
 
