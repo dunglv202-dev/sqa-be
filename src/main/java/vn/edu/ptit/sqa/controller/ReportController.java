@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import vn.edu.ptit.sqa.dto.ReportPeriod;
 import vn.edu.ptit.sqa.model.GeneralReport;
+import vn.edu.ptit.sqa.model.LoanReport;
 import vn.edu.ptit.sqa.service.ReportService;
 
 import java.time.LocalDate;
@@ -24,5 +25,13 @@ public class ReportController {
         LocalDate to = YearMonth.from(from).atEndOfMonth();
 
         return reportService.generateGeneralReport(from, to);
+    }
+
+    @GetMapping("/loan")
+    public LoanReport getLoanReport(ReportPeriod reportPeriod) {
+        LocalDate from = LocalDate.of(reportPeriod.getYear(), reportPeriod.getMonth(), 1);
+        LocalDate to = YearMonth.from(from).atEndOfMonth();
+
+        return reportService.generateLoanReport(from, to);
     }
 }

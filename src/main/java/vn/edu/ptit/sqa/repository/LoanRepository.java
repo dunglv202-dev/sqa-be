@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import vn.edu.ptit.sqa.entity.Customer;
 import vn.edu.ptit.sqa.entity.Loan;
+import vn.edu.ptit.sqa.model.LoanPurposeDistribution;
 import vn.edu.ptit.sqa.model.NewLoanSummary;
 
 import java.time.LocalDate;
@@ -19,4 +20,12 @@ public interface LoanRepository extends JpaRepository<Loan, Long> {
     NewLoanSummary summaryForNewLoan(@Param("from") LocalDate from, @Param("to") LocalDate to);
 
     List<Loan> findAllByCustomer(Customer customer);
+
+    @Query("""
+        SELECT new vn.edu.ptit.sqa.model.LoanPurposeDistribution(l.purpose, SUM(l.amount))
+        FROM Loan l
+        WHERE l.createdAt BETWEEN :from AND :to
+        GROUP BY l.purpose
+    """)
+    List<LoanPurposeDistribution> getLoanDistributionByPurpose(@Param("from") LocalDate from, @Param("to") LocalDate to);
 }
