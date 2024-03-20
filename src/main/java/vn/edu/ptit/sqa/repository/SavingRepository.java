@@ -3,11 +3,13 @@ package vn.edu.ptit.sqa.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import vn.edu.ptit.sqa.entity.Customer;
 import vn.edu.ptit.sqa.entity.Saving;
 import vn.edu.ptit.sqa.model.NewLoanSummary;
 import vn.edu.ptit.sqa.model.NewSavingSummary;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public interface SavingRepository extends JpaRepository<Saving, Long> {
     @Query("""
@@ -16,4 +18,6 @@ public interface SavingRepository extends JpaRepository<Saving, Long> {
         WHERE s.depositDate BETWEEN :from AND :to
     """)
     NewSavingSummary summaryForNewSaving(@Param("from") LocalDate from, @Param("to") LocalDate to);
+
+    List<Saving> findAllByCustomer(Customer customer);
 }

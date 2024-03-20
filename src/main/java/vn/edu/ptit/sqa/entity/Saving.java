@@ -3,6 +3,7 @@ package vn.edu.ptit.sqa.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
+import vn.edu.ptit.sqa.constant.Term;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -22,7 +23,8 @@ public class Saving {
 
     private double yearlyInterestRate;
 
-    private Period term;
+    @Enumerated(EnumType.STRING)
+    private Term term;
 
     private LocalDate dueDate;
 
@@ -35,11 +37,11 @@ public class Saving {
 
     private void setDueDate(LocalDate dueDate) {}
 
-    public void setTerm(Period term) {
+    public void setTerm(Term term) {
         this.term = term;
 
         if (this.depositDate != null) {
-            this.dueDate = this.depositDate.plus(this.term);
+            this.dueDate = this.depositDate.plus(this.term.getPeriod());
         }
     }
 
@@ -47,7 +49,7 @@ public class Saving {
         this.depositDate = depositTimestamp;
 
         if (this.term != null) {
-            this.dueDate = this.depositDate.plus(this.term);
+            this.dueDate = this.depositDate.plus(this.term.getPeriod());
         }
     }
 }

@@ -9,7 +9,9 @@ import vn.edu.ptit.sqa.repository.LoanRepository;
 import vn.edu.ptit.sqa.repository.SavingRepository;
 import vn.edu.ptit.sqa.service.ReportService;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -24,9 +26,9 @@ public class ReportServiceImpl implements ReportService {
 
         return GeneralReport.builder()
             .numberOfLoan(loanSummary.getNewLoan())
-            .lendingAmount(loanSummary.getTotalAmount())
+            .lendingAmount(Objects.requireNonNullElse(loanSummary.getTotalAmount(), BigDecimal.ZERO))
             .numberOfSaving(savingSummary.getNewSaving())
-            .savingDepositAmount(savingSummary.getTotalAmount())
+            .savingDepositAmount(Objects.requireNonNullElse(savingSummary.getTotalAmount(), BigDecimal.ZERO))
             .build();
     }
 }

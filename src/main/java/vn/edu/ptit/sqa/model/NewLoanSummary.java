@@ -11,5 +11,5 @@ import java.math.BigDecimal;
 @Setter
 public class NewLoanSummary {
     private Long newLoan;
-    private BigDecimal totalAmount;
+    private BigDecimal totalAmount = BigDecimal.ZERO;
 }

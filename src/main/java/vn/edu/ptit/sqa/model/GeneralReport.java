@@ -11,7 +11,9 @@ import java.math.BigDecimal;
 @Builder
 public class GeneralReport {
     private long numberOfLoan;
-    private BigDecimal lendingAmount;
+    @Builder.Default
+    private BigDecimal lendingAmount = BigDecimal.ZERO;
     private long numberOfSaving;
-    private BigDecimal savingDepositAmount;
+    @Builder.Default
+    private BigDecimal savingDepositAmount = BigDecimal.ZERO;
 }
