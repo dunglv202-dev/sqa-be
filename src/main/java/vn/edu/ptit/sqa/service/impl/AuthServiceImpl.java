@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import vn.edu.ptit.sqa.config.SecurityConfig;
 import vn.edu.ptit.sqa.dto.AuthResult;
 import vn.edu.ptit.sqa.dto.LoginDTO;
-import vn.edu.ptit.sqa.exception.UnauthorizedException;
+import vn.edu.ptit.sqa.exception.UnauthenticatedException;
 import vn.edu.ptit.sqa.helper.JwtProvider;
 import vn.edu.ptit.sqa.model.ApplicationUser;
 import vn.edu.ptit.sqa.service.AuthService;
@@ -40,7 +40,7 @@ public class AuthServiceImpl implements AuthService {
                 .accessToken(accessToken)
                 .build();
         } catch (BadCredentialsException e) {
-            throw new UnauthorizedException(e);
+            throw new UnauthenticatedException(e);
         }
     }
 

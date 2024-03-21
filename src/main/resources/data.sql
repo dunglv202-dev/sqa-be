@@ -1,5 +1,17 @@
-INSERT INTO user (display_name, password, username)
-VALUES ('Dung LV', '$2a$10$ZKh6m8OjhoTa63/sabOPFune7ctqIRFKofdweB4tIXqooUpHhkBAy', 'dunglv');
+INSERT INTO authority (id, code)
+VALUES (1, 'ROLE_MANAGER');
+
+INSERT INTO authority (id, code)
+VALUES (2, 'ROLE_EMPLOYEE');
+
+# RAW PASSWORD: pass
+INSERT INTO user (id, display_name, password, username)
+VALUES (1, 'Manager', '$2a$10$lZOpHEwtoY3e6LxqvOq0lu/eI0tOEKQudZxJVJqktnqT95pHHmNTO', 'manager'),
+       (2, 'Employee', '$2a$10$lZOpHEwtoY3e6LxqvOq0lu/eI0tOEKQudZxJVJqktnqT95pHHmNTO', 'employee');
+
+INSERT INTO user_authorities (user_id, authorities_id)
+VALUES (1, 1),
+       (2, 2);
 
 INSERT INTO customer (firstname, lastname, gender, id_number, issue_date, issue_by)
 VALUES ('Nguyen Van', 'A', 'MALE', '024202007168', '2024-03-19', 'CA Ha Noi');

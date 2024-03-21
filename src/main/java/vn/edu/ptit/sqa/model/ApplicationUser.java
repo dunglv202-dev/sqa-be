@@ -4,6 +4,7 @@ import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import vn.edu.ptit.sqa.entity.Authority;
 import vn.edu.ptit.sqa.entity.User;
 
 import java.util.Collection;
@@ -22,13 +23,16 @@ public class ApplicationUser implements UserDetails {
     public static ApplicationUser of(Long userId, Collection<String> authorities) {
         User user = new User();
         user.setId(userId);
+        user.setAuthorities(authorities.stream().map(Authority::new).toList());
         return ApplicationUser.ofUser(user);
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        // TODO: extract authorities
-        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        return user.getAuthorities()
+            .stream()
+            .map(authority -> new SimpleGrantedAuthority(authority.getCode()))
+            .toList();
     }
 
     @Override
