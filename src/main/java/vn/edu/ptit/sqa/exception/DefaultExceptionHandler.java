@@ -3,14 +3,27 @@ package vn.edu.ptit.sqa.exception;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import vn.edu.ptit.sqa.dto.Error;
 
+import java.util.Objects;
+
 @RestControllerAdvice
 @Slf4j
 public class DefaultExceptionHandler {
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Error handleInvalidData(MethodArgumentNotValidException e) {
+        String message = Objects.requireNonNull(e.getDetailMessageArguments())[0].toString();
+
+        return Error.builder()
+            .error(message)
+            .build();
+    }
+
     @ExceptionHandler(UnauthenticatedException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public Error handleAuthorization() {
