@@ -3,10 +3,11 @@ package vn.edu.ptit.sqa.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
+import vn.edu.ptit.sqa.constant.LoanType;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Data
@@ -36,4 +37,10 @@ public class Loan {
 
     @CreationTimestamp
     private LocalDate createdAt;
+
+    @OneToMany
+    private List<Collateral> collaterals;
+
+    @Enumerated(EnumType.STRING)
+    private LoanType type;
 }

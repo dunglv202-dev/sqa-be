@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import vn.edu.ptit.sqa.dto.CustomerLoanListing;
+import vn.edu.ptit.sqa.dto.DetailLoan;
 import vn.edu.ptit.sqa.service.LoanService;
 
 @RestController
@@ -19,5 +20,11 @@ public class LoanController {
     @PreAuthorize("hasAnyRole('MANAGER', 'EMPLOYEE')")
     public CustomerLoanListing getCustomerLoans(@PathVariable Long id) {
         return loanService.getCustomerLoans(id);
+    }
+
+    @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('MANAGER', 'EMPLOYEE')")
+    public DetailLoan getLoanDetail(@PathVariable Long id) {
+        return loanService.getDetailLoan(id);
     }
 }

@@ -9,11 +9,11 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public class CustomerDTO {
-    private String firstname;
-    private String lastname;
-    private String idCardNo;
-    private LocalDate idCardIssueDate;
-    private String idCardIssueBy;
+    protected String firstname;
+    protected String lastname;
+    protected String idCardNo;
+    protected LocalDate idCardIssueDate;
+    protected String idCardIssueBy;
 
     public CustomerDTO(Customer customer) {
         this.firstname = customer.getFirstname();
