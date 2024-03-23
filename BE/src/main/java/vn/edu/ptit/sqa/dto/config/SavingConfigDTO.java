@@ -1,10 +1,9 @@
-package vn.edu.ptit.sqa.dto.saving;
+package vn.edu.ptit.sqa.dto.config;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import vn.edu.ptit.sqa.constant.Term;
-import vn.edu.ptit.sqa.dto.generic.ConfigDTO;
 import vn.edu.ptit.sqa.entity.config.SavingConfig;
 import vn.edu.ptit.sqa.validator.InterestRate;
 

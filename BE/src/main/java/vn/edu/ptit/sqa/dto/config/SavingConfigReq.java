@@ -1,7 +1,6 @@
-package vn.edu.ptit.sqa.dto.saving;
+package vn.edu.ptit.sqa.dto.config;
 
 import vn.edu.ptit.sqa.constant.ConfigType;
-import vn.edu.ptit.sqa.dto.generic.ConfigReq;
 import vn.edu.ptit.sqa.entity.config.ConfigHistory;
 import vn.edu.ptit.sqa.entity.config.SavingConfig;
 

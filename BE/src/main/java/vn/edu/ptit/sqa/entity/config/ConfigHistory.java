@@ -3,6 +3,7 @@ package vn.edu.ptit.sqa.entity.config;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import vn.edu.ptit.sqa.constant.ConfigStatus;
 import vn.edu.ptit.sqa.constant.ConfigType;
 import vn.edu.ptit.sqa.entity.auth.User;
@@ -17,6 +18,8 @@ public class ConfigHistory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    private String summary;
+
     @Enumerated(EnumType.STRING)
     private ConfigType configType;
 
@@ -27,6 +30,11 @@ public class ConfigHistory {
 
     @Enumerated(EnumType.STRING)
     private ConfigStatus status;
+
+    private String note;
+
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
 
     @CreationTimestamp
     private LocalDateTime createdAt;

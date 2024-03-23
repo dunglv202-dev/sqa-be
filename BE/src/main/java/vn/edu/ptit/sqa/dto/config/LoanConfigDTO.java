@@ -1,10 +1,9 @@
-package vn.edu.ptit.sqa.dto.loan;
+package vn.edu.ptit.sqa.dto.config;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.Getter;
 import lombok.Setter;
-import vn.edu.ptit.sqa.dto.generic.ConfigDTO;
 import vn.edu.ptit.sqa.entity.config.LoanConfig;
 import vn.edu.ptit.sqa.entity.loan.LoanPurpose;
 import vn.edu.ptit.sqa.validator.InterestRate;

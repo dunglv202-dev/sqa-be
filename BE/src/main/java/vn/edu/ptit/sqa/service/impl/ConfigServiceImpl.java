@@ -5,10 +5,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
+import vn.edu.ptit.sqa.constant.ConfigStatus;
 import vn.edu.ptit.sqa.constant.ConfigType;
 import vn.edu.ptit.sqa.constant.Term;
-import vn.edu.ptit.sqa.dto.loan.LoanConfigReq;
-import vn.edu.ptit.sqa.dto.saving.SavingConfigReq;
+import vn.edu.ptit.sqa.dto.config.ConfigHistoryDTO;
+import vn.edu.ptit.sqa.dto.config.LoanConfigReq;
+import vn.edu.ptit.sqa.dto.config.ReviewConfigResultDTO;
+import vn.edu.ptit.sqa.dto.config.SavingConfigReq;
 import vn.edu.ptit.sqa.entity.config.ConfigHistory;
 import vn.edu.ptit.sqa.entity.config.LoanConfig;
 import vn.edu.ptit.sqa.entity.Option;
@@ -58,19 +61,6 @@ public class ConfigServiceImpl implements ConfigService {
         loanConfigRepository.saveAll(loanConfigs);
     }
 
-    private boolean isMatchPurposeSet(List<LoanConfig> loanConfigs) {
-        List<Long> purposes = loanPurposeRepository.findAll()
-            .stream()
-            .map(Option::getId)
-            .toList();
-        Set<Long> configuredPurposes = loanConfigs
-            .stream()
-            .map(loanConfig -> loanConfig.getPurpose().getId())
-            .collect(Collectors.toSet());
-
-        return configuredPurposes.size() == purposes.size() && configuredPurposes.containsAll(purposes);
-    }
-
     @Override
     @Transactional
     public void changeSavingConfig(@Valid SavingConfigReq savingConfigReq) {
@@ -91,6 +81,38 @@ public class ConfigServiceImpl implements ConfigService {
         }
 
         configHistoryRepository.save(configHistory);
+    }
+
+    @Override
+    public void updateConfigReviewResult(Integer configId, ReviewConfigResultDTO reviewConfigResult) {
+        ConfigHistory configHistory = configHistoryRepository.findById(configId)
+            .orElseThrow(() -> new ClientVisibleException("{config.not_exist}"));
+
+        configHistory.setStatus(reviewConfigResult.isApproved() ? ConfigStatus.APPROVED : ConfigStatus.REJECTED);
+        configHistory.setNote(reviewConfigResult.getNote());
+
+        configHistoryRepository.save(configHistory);
+    }
+
+    @Override
+    public List<ConfigHistoryDTO> getAllPendingConfig() {
+        return configHistoryRepository.getAllActivePendingConfigs()
+            .stream()
+            .map(ConfigHistoryDTO::new)
+            .toList();
+    }
+
+    private boolean isMatchPurposeSet(List<LoanConfig> loanConfigs) {
+        List<Long> purposes = loanPurposeRepository.findAll()
+            .stream()
+            .map(Option::getId)
+            .toList();
+        Set<Long> configuredPurposes = loanConfigs
+            .stream()
+            .map(loanConfig -> loanConfig.getPurpose().getId())
+            .collect(Collectors.toSet());
+
+        return configuredPurposes.size() == purposes.size() && configuredPurposes.containsAll(purposes);
     }
 
     private boolean isMatchTermSet(List<SavingConfig> savingConfigs) {

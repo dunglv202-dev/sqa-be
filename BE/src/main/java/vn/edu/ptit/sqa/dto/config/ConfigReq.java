@@ -1,7 +1,9 @@
-package vn.edu.ptit.sqa.dto.generic;
+package vn.edu.ptit.sqa.dto.config;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import vn.edu.ptit.sqa.constant.ConfigStatus;
@@ -17,13 +19,18 @@ import java.util.Set;
 public abstract class ConfigReq<C> {
     private ConfigHistory configHistory;
 
-    @Future(message = "{saving.config.start_date.invalid}")
+    @NotNull(message = "{config.summary.required}")
+    @NotBlank(message = "{config.summary.required}")
+    protected String summary;
+
+    @Future(message = "{config.start_date.invalid}")
     protected LocalDate startDate;
 
     protected Set<@Valid C> configs;
 
     public ConfigHistory toHistoryEntity() {
         ConfigHistory configHistory = new ConfigHistory();
+        configHistory.setSummary(this.summary);
         configHistory.setStartDate(this.startDate);
         configHistory.setStatus(ConfigStatus.PENDING);
 

@@ -4,14 +4,19 @@ VALUES (1, 'ROLE_MANAGER');
 INSERT INTO authority (id, code)
 VALUES (2, 'ROLE_EMPLOYEE');
 
+INSERT INTO authority (id, code)
+VALUES (3, 'ROLE_DIRECTOR');
+
 # RAW PASSWORD: pass
 INSERT INTO user (id, display_name, password, username)
 VALUES (1, 'Manager', '$2a$10$lZOpHEwtoY3e6LxqvOq0lu/eI0tOEKQudZxJVJqktnqT95pHHmNTO', 'manager'),
-       (2, 'Employee', '$2a$10$lZOpHEwtoY3e6LxqvOq0lu/eI0tOEKQudZxJVJqktnqT95pHHmNTO', 'employee');
+       (2, 'Employee', '$2a$10$lZOpHEwtoY3e6LxqvOq0lu/eI0tOEKQudZxJVJqktnqT95pHHmNTO', 'employee'),
+       (3, 'Director', '$2a$10$lZOpHEwtoY3e6LxqvOq0lu/eI0tOEKQudZxJVJqktnqT95pHHmNTO', 'director');
 
 INSERT INTO user_authorities (user_id, authorities_id)
 VALUES (1, 1),
-       (2, 2);
+       (2, 2),
+       (3, 3);
 
 INSERT INTO customer (firstname, lastname, gender, id_number, issue_date, issue_by)
 VALUES ('Nguyen Van', 'A', 'MALE', '024202007168', '2024-03-19', 'CA Ha Noi');
