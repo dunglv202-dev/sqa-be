@@ -32,8 +32,9 @@ INSERT INTO loan (
     yearly_interest_rate,
     customer_id,
     job_id,
-    purpose_id
-) VALUES (1, 150, '2024-03-01', '2024-05-01', 100, 50, 5.0, 1, 1, 2);
+    purpose_id,
+    type
+) VALUES (1, 150, '2024-03-01', '2024-05-01', 100, 50, 5.0, 1, 1, 2, 'UNSECURED');
 
 INSERT INTO saving (
     id,
@@ -41,7 +42,7 @@ INSERT INTO saving (
     customer_id,
     deposit_date,
     due_date,
-    term,
+    term_in_month,
     withdraw_date,
     yearly_interest_rate
-) VALUES (1, 200, 1, '2024-03-01', '2024-04-01', 'ONE_MONTH', NULL, 6.0);
+) VALUES (1, 200, 1, '2024-03-01', '2024-04-01', 1, NULL, 6.0);

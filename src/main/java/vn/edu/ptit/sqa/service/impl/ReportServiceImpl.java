@@ -27,7 +27,7 @@ public class ReportServiceImpl implements ReportService {
             .numberOfLoan(loanSummary.getNewLoan())
             .lendingAmount(Objects.requireNonNullElse(loanSummary.getTotalAmount(), BigDecimal.ZERO))
             .numberOfSaving(savingSummary.getNewSaving())
-            .savingDepositAmount(Objects.requireNonNullElse(savingSummary.getTotalAmount(), BigDecimal.ZERO))
+            .savingDepositAmount(Objects.requireNonNullElse(savingSummary.getTotalDepositAmount(), BigDecimal.ZERO))
             .build();
     }
 
@@ -39,6 +39,20 @@ public class ReportServiceImpl implements ReportService {
             .numberOfLoan(loanSummary.getNewLoan())
             .amountForLending(Objects.requireNonNullElse(loanSummary.getTotalAmount(), BigDecimal.ZERO))
             .purposeDistribution(loanPurposeDistributions)
+            .build();
+    }
+
+    @Override
+    public SavingReport generateSavingReport(LocalDate from, LocalDate to) {
+        NewSavingSummary savingSummary = savingRepository.summaryForNewSaving(from, to);
+        DueSavingPayment dueSavingPayment = savingRepository.getDueSavingPaymentInfo(from, to)
+            .orElse(new DueSavingPayment());
+
+        return SavingReport.builder()
+            .numberOfSavingAccount(savingSummary.getNewSaving())
+            .depositAmount(Objects.requireNonNullElse(savingSummary.getTotalDepositAmount(), BigDecimal.ZERO))
+            .amountPayForDueAccount(Objects.requireNonNullElse(dueSavingPayment.getTotalToPay(), BigDecimal.ZERO))
+            .interestPayForDueAccount(Objects.requireNonNullElse(dueSavingPayment.getInterestToPay(), BigDecimal.ZERO))
             .build();
     }
 }

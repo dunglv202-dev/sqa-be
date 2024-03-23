@@ -15,7 +15,7 @@ public class SavingDTO {
     private Long id;
     private BigDecimal amount;
     private double yearlyInterestRate;
-    private Term term;
+    private int termInMonth;
     private LocalDate dueDate;
     private LocalDate depositDate;
     private LocalDate withdrawDate;
@@ -24,7 +24,7 @@ public class SavingDTO {
         this.id = saving.getId();
         this.amount = saving.getAmount();
         this.yearlyInterestRate = saving.getYearlyInterestRate();
-        this.term = saving.getTerm();
+        this.termInMonth = saving.getTermInMonth();
         this.dueDate = saving.getDueDate();
         this.depositDate = saving.getDepositDate();
         this.withdrawDate = saving.getWithdrawDate();

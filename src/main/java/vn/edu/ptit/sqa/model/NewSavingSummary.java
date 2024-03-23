@@ -11,5 +11,5 @@ import java.math.BigDecimal;
 @Setter
 public class NewSavingSummary {
     private Long newSaving;
-    private BigDecimal totalAmount;
+    private BigDecimal totalDepositAmount;
 }

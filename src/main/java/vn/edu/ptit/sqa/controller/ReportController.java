@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import vn.edu.ptit.sqa.model.Period;
 import vn.edu.ptit.sqa.model.GeneralReport;
 import vn.edu.ptit.sqa.model.LoanReport;
+import vn.edu.ptit.sqa.model.SavingReport;
 import vn.edu.ptit.sqa.service.ReportService;
 
 @RestController
@@ -28,5 +29,11 @@ public class ReportController {
     @PreAuthorize("hasRole('MANAGER')")
     public LoanReport getLoanReport(@Valid Period period) {
         return reportService.generateLoanReport(period.getFrom(), period.getTo());
+    }
+
+    @GetMapping("/saving")
+    @PreAuthorize("hasRole('MANAGER')")
+    public SavingReport getSavingReport(@Valid Period period) {
+        return reportService.generateSavingReport(period.getFrom(), period.getTo());
     }
 }
