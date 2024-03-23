@@ -40,6 +40,14 @@ public class DefaultExceptionHandler {
             .build();
     }
 
+    @ExceptionHandler(ClientVisibleException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Error handleBusinessException(ClientVisibleException e) {
+        return Error.builder()
+            .error(e.getMessage())
+            .build();
+    }
+
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Error handleUnknownError(Exception e) {

@@ -8,7 +8,7 @@ import vn.edu.ptit.sqa.dto.CustomerLoanDTO;
 import vn.edu.ptit.sqa.dto.DetailLoan;
 import vn.edu.ptit.sqa.entity.Customer;
 import vn.edu.ptit.sqa.entity.Loan;
-import vn.edu.ptit.sqa.exception.BusinessException;
+import vn.edu.ptit.sqa.exception.ClientVisibleException;
 import vn.edu.ptit.sqa.repository.CustomerRepository;
 import vn.edu.ptit.sqa.repository.LoanRepository;
 import vn.edu.ptit.sqa.service.LoanService;
@@ -36,7 +36,7 @@ public class LoanServiceImpl implements LoanService {
 
     @Override
     public DetailLoan getDetailLoan(Long id) {
-        Loan loan = loanRepository.findById(id).orElseThrow(BusinessException::new);
+        Loan loan = loanRepository.findById(id).orElseThrow(() -> new ClientVisibleException("{loan.not_exist}"));
 
         return new DetailLoan(loan);
     }
