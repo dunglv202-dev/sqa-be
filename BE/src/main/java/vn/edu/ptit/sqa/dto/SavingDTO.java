@@ -2,12 +2,10 @@ package vn.edu.ptit.sqa.dto;
 
 import lombok.Getter;
 import lombok.Setter;
-import vn.edu.ptit.sqa.constant.Term;
 import vn.edu.ptit.sqa.entity.Saving;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.Period;
 
 @Getter
 @Setter
