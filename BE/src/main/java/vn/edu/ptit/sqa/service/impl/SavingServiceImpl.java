@@ -2,11 +2,11 @@ package vn.edu.ptit.sqa.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import vn.edu.ptit.sqa.dto.CustomerDTO;
-import vn.edu.ptit.sqa.dto.CustomerSavingListing;
-import vn.edu.ptit.sqa.dto.SavingDTO;
-import vn.edu.ptit.sqa.entity.Customer;
-import vn.edu.ptit.sqa.entity.Saving;
+import vn.edu.ptit.sqa.dto.customer.CustomerDTO;
+import vn.edu.ptit.sqa.dto.saving.CustomerSavingListing;
+import vn.edu.ptit.sqa.dto.saving.SavingDTO;
+import vn.edu.ptit.sqa.entity.customer.Customer;
+import vn.edu.ptit.sqa.entity.saving.Saving;
 import vn.edu.ptit.sqa.repository.CustomerRepository;
 import vn.edu.ptit.sqa.repository.SavingRepository;
 import vn.edu.ptit.sqa.service.SavingService;

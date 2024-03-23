@@ -6,7 +6,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import vn.edu.ptit.sqa.dto.LoanConfigReq;
+import vn.edu.ptit.sqa.dto.loan.LoanConfigReq;
+import vn.edu.ptit.sqa.dto.saving.SavingConfigReq;
 import vn.edu.ptit.sqa.service.ConfigService;
 
 @RestController
@@ -23,7 +24,7 @@ public class ConfigController {
 
     @PostMapping("/saving")
     @PreAuthorize("hasRole('MANAGER')")
-    public void changeSavingConfig() {
-
+    public void changeSavingConfig(@RequestBody SavingConfigReq savingConfigReq) {
+        configService.changeSavingConfig(savingConfigReq);
     }
 }

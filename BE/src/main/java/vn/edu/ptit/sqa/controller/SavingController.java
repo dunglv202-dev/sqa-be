@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import vn.edu.ptit.sqa.dto.CustomerSavingListing;
+import vn.edu.ptit.sqa.dto.saving.CustomerSavingListing;
 import vn.edu.ptit.sqa.service.SavingService;
 
 @RestController

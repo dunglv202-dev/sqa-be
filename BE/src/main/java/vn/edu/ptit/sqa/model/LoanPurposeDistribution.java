@@ -3,7 +3,7 @@ package vn.edu.ptit.sqa.model;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import vn.edu.ptit.sqa.entity.LoanPurpose;
+import vn.edu.ptit.sqa.entity.loan.LoanPurpose;
 
 import java.math.BigDecimal;
 

@@ -5,7 +5,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import vn.edu.ptit.sqa.entity.User;
+import vn.edu.ptit.sqa.entity.auth.User;
 import vn.edu.ptit.sqa.model.ApplicationUser;
 import vn.edu.ptit.sqa.repository.UserRepository;
 

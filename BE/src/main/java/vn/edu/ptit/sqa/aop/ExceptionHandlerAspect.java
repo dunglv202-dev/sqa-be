@@ -15,7 +15,7 @@ public class ExceptionHandlerAspect {
     private final MessageHelper messageHelper;
 
     @Pointcut("execution(* vn.edu.ptit.sqa.exception.DefaultExceptionHandler.handle*(..))")
-    private void exceptionHandlerMethod() {};
+    private void exceptionHandlerMethod() {}
 
     @AfterReturning(pointcut = "exceptionHandlerMethod()", returning = "error")
     public void resolveClientMessage(Error error) {

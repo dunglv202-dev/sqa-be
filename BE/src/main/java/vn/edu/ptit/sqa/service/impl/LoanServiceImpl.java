@@ -2,12 +2,12 @@ package vn.edu.ptit.sqa.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import vn.edu.ptit.sqa.dto.CustomerDTO;
-import vn.edu.ptit.sqa.dto.CustomerLoanListing;
-import vn.edu.ptit.sqa.dto.CustomerLoanDTO;
-import vn.edu.ptit.sqa.dto.DetailLoan;
-import vn.edu.ptit.sqa.entity.Customer;
-import vn.edu.ptit.sqa.entity.Loan;
+import vn.edu.ptit.sqa.dto.customer.CustomerDTO;
+import vn.edu.ptit.sqa.dto.loan.CustomerLoanListing;
+import vn.edu.ptit.sqa.dto.loan.CustomerLoanDTO;
+import vn.edu.ptit.sqa.dto.loan.DetailLoan;
+import vn.edu.ptit.sqa.entity.customer.Customer;
+import vn.edu.ptit.sqa.entity.loan.Loan;
 import vn.edu.ptit.sqa.exception.ClientVisibleException;
 import vn.edu.ptit.sqa.repository.CustomerRepository;
 import vn.edu.ptit.sqa.repository.LoanRepository;

@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import vn.edu.ptit.sqa.dto.AuthResult;
-import vn.edu.ptit.sqa.dto.LoginDTO;
+import vn.edu.ptit.sqa.dto.auth.AuthResult;
+import vn.edu.ptit.sqa.dto.auth.LoginDTO;
 import vn.edu.ptit.sqa.service.AuthService;
 
 @RestController

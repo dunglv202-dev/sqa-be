@@ -4,11 +4,10 @@ import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import vn.edu.ptit.sqa.entity.Authority;
-import vn.edu.ptit.sqa.entity.User;
+import vn.edu.ptit.sqa.entity.auth.Authority;
+import vn.edu.ptit.sqa.entity.auth.User;
 
 import java.util.Collection;
-import java.util.List;
 
 @Getter
 public class ApplicationUser implements UserDetails {

@@ -3,8 +3,8 @@ package vn.edu.ptit.sqa.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import vn.edu.ptit.sqa.entity.Customer;
-import vn.edu.ptit.sqa.entity.Loan;
+import vn.edu.ptit.sqa.entity.customer.Customer;
+import vn.edu.ptit.sqa.entity.loan.Loan;
 import vn.edu.ptit.sqa.model.LoanPurposeDistribution;
 import vn.edu.ptit.sqa.model.NewLoanSummary;
 
