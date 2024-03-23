@@ -2,6 +2,7 @@ package vn.edu.ptit.sqa.dto.config;
 
 import lombok.Getter;
 import lombok.Setter;
+import vn.edu.ptit.sqa.constant.ConfigStatus;
 import vn.edu.ptit.sqa.constant.ConfigType;
 import vn.edu.ptit.sqa.dto.auth.UserDTO;
 import vn.edu.ptit.sqa.entity.config.ConfigHistory;
@@ -18,6 +19,7 @@ public class ConfigHistoryDTO {
     private LocalDate startDate;
     private LocalDateTime createdAt;
     private UserDTO userRequested;
+    private ConfigStatus status;
 
     public ConfigHistoryDTO(ConfigHistory configHistory) {
         this.id = configHistory.getId();
@@ -26,5 +28,6 @@ public class ConfigHistoryDTO {
         this.startDate = configHistory.getStartDate();
         this.createdAt = configHistory.getCreatedAt();
         this.userRequested = new UserDTO(configHistory.getCreatedBy());
+        this.status = configHistory.getStatus();
     }
 }

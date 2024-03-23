@@ -2,6 +2,9 @@ package vn.edu.ptit.sqa.service.impl;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
@@ -12,12 +15,15 @@ import vn.edu.ptit.sqa.dto.config.ConfigHistoryDTO;
 import vn.edu.ptit.sqa.dto.config.LoanConfigReq;
 import vn.edu.ptit.sqa.dto.config.ReviewConfigResultDTO;
 import vn.edu.ptit.sqa.dto.config.SavingConfigReq;
-import vn.edu.ptit.sqa.entity.config.ConfigHistory;
-import vn.edu.ptit.sqa.entity.config.LoanConfig;
 import vn.edu.ptit.sqa.entity.Option;
+import vn.edu.ptit.sqa.entity.config.ConfigHistory;
+import vn.edu.ptit.sqa.entity.config.ConfigHistory_;
+import vn.edu.ptit.sqa.entity.config.LoanConfig;
 import vn.edu.ptit.sqa.entity.config.SavingConfig;
 import vn.edu.ptit.sqa.exception.ClientVisibleException;
 import vn.edu.ptit.sqa.helper.AuthHelper;
+import vn.edu.ptit.sqa.model.Pagination;
+import vn.edu.ptit.sqa.model.ResultPage;
 import vn.edu.ptit.sqa.repository.ConfigHistoryRepository;
 import vn.edu.ptit.sqa.repository.LoanConfigRepository;
 import vn.edu.ptit.sqa.repository.LoanPurposeRepository;
@@ -88,6 +94,10 @@ public class ConfigServiceImpl implements ConfigService {
         ConfigHistory configHistory = configHistoryRepository.findById(configId)
             .orElseThrow(() -> new ClientVisibleException("{config.not_exist}"));
 
+        if (isConfigResolved(configHistory)) {
+            throw new ClientVisibleException("{config.resolved}");
+        }
+
         configHistory.setStatus(reviewConfigResult.isApproved() ? ConfigStatus.APPROVED : ConfigStatus.REJECTED);
         configHistory.setNote(reviewConfigResult.getNote());
 
@@ -95,11 +105,37 @@ public class ConfigServiceImpl implements ConfigService {
     }
 
     @Override
-    public List<ConfigHistoryDTO> getAllPendingConfig() {
-        return configHistoryRepository.getAllActivePendingConfigs()
-            .stream()
-            .map(ConfigHistoryDTO::new)
-            .toList();
+    public ResultPage<ConfigHistoryDTO> getAllPendingConfig(Pagination pagination) {
+        Sort sort = Sort.by(Sort.Direction.DESC, ConfigHistory_.START_DATE);
+
+        Page<ConfigHistory> configs = configHistoryRepository.findAllByStatusIn(
+            List.of(ConfigStatus.PENDING, ConfigStatus.EXPIRED),
+            PageRequest.of(pagination.getPage(), pagination.getSize()).withSort(sort)
+        );
+
+        return ResultPage.<ConfigHistoryDTO>builder()
+            .totalPages(configs.getTotalPages())
+            .items(configs.map(ConfigHistoryDTO::new).toList())
+            .build();
+    }
+
+    @Override
+    public ResultPage<ConfigHistoryDTO> getAllConfigHistory(Pagination pagination) {
+        Sort sort = Sort.by(Sort.Direction.DESC, ConfigHistory_.UPDATED_AT);
+
+        Page<ConfigHistory> configs = configHistoryRepository.findAllByStatusIn(
+            List.of(ConfigStatus.APPROVED, ConfigStatus.REJECTED),
+            PageRequest.of(pagination.getPage(), pagination.getSize()).withSort(sort)
+        );
+
+        return ResultPage.<ConfigHistoryDTO>builder()
+            .totalPages(configs.getTotalPages())
+            .items(configs.map(ConfigHistoryDTO::new).toList())
+            .build();
+    }
+
+    private boolean isConfigResolved(ConfigHistory config) {
+        return config.getStatus() == ConfigStatus.APPROVED || config.getStatus() == ConfigStatus.REJECTED;
     }
 
     private boolean isMatchPurposeSet(List<LoanConfig> loanConfigs) {

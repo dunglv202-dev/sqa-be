@@ -7,6 +7,8 @@ import vn.edu.ptit.sqa.dto.config.ConfigHistoryDTO;
 import vn.edu.ptit.sqa.dto.config.LoanConfigReq;
 import vn.edu.ptit.sqa.dto.config.ReviewConfigResultDTO;
 import vn.edu.ptit.sqa.dto.config.SavingConfigReq;
+import vn.edu.ptit.sqa.model.Pagination;
+import vn.edu.ptit.sqa.model.ResultPage;
 import vn.edu.ptit.sqa.service.ConfigService;
 
 import java.util.List;
@@ -29,10 +31,16 @@ public class ConfigController {
         configService.changeSavingConfig(savingConfigReq);
     }
 
-    @GetMapping("/pending")
+    @GetMapping("/resolved")
     @PreAuthorize("hasRole('DIRECTOR')")
-    public List<ConfigHistoryDTO> getPendingConfigRequests() {
-        return configService.getAllPendingConfig();
+    public ResultPage<ConfigHistoryDTO> getAllConfigHistory(Pagination pagination) {
+        return configService.getAllConfigHistory(pagination);
+    }
+
+    @GetMapping("/unresolved")
+    @PreAuthorize("hasRole('DIRECTOR')")
+    public ResultPage<ConfigHistoryDTO> getPendingConfigRequests(Pagination pagination) {
+        return configService.getAllPendingConfig(pagination);
     }
 
     @PutMapping("/{configId}/result")
