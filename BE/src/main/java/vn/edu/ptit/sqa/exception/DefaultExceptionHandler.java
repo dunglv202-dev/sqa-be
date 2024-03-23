@@ -1,5 +1,7 @@
 package vn.edu.ptit.sqa.exception;
 
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
@@ -21,6 +23,14 @@ public class DefaultExceptionHandler {
 
         return Error.builder()
             .error(message)
+            .build();
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Error handleConstrainViolation(ConstraintViolationException e) {
+        return Error.builder()
+            .error(e.getConstraintViolations().stream().map(ConstraintViolation::getMessage).toList().get(0))
             .build();
     }
 

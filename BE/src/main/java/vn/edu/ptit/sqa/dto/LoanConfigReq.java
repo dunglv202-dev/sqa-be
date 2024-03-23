@@ -10,6 +10,7 @@ import vn.edu.ptit.sqa.constant.LoanType;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -20,5 +21,5 @@ public class LoanConfigReq {
     @Future(message = "{loan.config.start_date.invalid}")
     private LocalDate startDate;
 
-    private List<@Valid LoanConfigDTO> configs;
+    private Set<@Valid LoanConfigDTO> configs;
 }
