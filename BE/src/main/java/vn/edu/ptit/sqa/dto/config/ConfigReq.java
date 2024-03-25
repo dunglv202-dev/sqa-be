@@ -23,7 +23,7 @@ public abstract class ConfigReq<C> {
     @NotBlank(message = "{config.summary.required}")
     protected String summary;
 
-    @Future(message = "{config.start_date.invalid}")
+    @Future(message = "{config.start_date.future}")
     protected LocalDate startDate;
 
     protected Set<@Valid C> configs;

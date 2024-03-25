@@ -38,4 +38,15 @@ public class ConfigHistory {
 
     @CreationTimestamp
     private LocalDateTime createdAt;
+
+    @PostLoad
+    public void updateExpiredPendingConfig() {
+        if (status == ConfigStatus.PENDING && !LocalDate.now().isBefore(startDate)) {
+            status = ConfigStatus.EXPIRED;
+        }
+    }
+
+    public boolean isResolvable() {
+        return status == ConfigStatus.PENDING;
+    }
 }

@@ -30,10 +30,12 @@ import vn.edu.ptit.sqa.repository.LoanPurposeRepository;
 import vn.edu.ptit.sqa.service.ConfigService;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @Validated
@@ -94,8 +96,8 @@ public class ConfigServiceImpl implements ConfigService {
         ConfigHistory configHistory = configHistoryRepository.findById(configId)
             .orElseThrow(() -> new ClientVisibleException("{config.not_exist}"));
 
-        if (isConfigResolved(configHistory)) {
-            throw new ClientVisibleException("{config.resolved}");
+        if (!configHistory.isResolvable()) {
+            throw new ClientVisibleException("{config.not_resolvable}");
         }
 
         configHistory.setStatus(reviewConfigResult.isApproved() ? ConfigStatus.APPROVED : ConfigStatus.REJECTED);
@@ -132,10 +134,6 @@ public class ConfigServiceImpl implements ConfigService {
             .totalPages(configs.getTotalPages())
             .items(configs.map(ConfigHistoryDTO::new).toList())
             .build();
-    }
-
-    private boolean isConfigResolved(ConfigHistory config) {
-        return config.getStatus() == ConfigStatus.APPROVED || config.getStatus() == ConfigStatus.REJECTED;
     }
 
     private boolean isMatchPurposeSet(List<LoanConfig> loanConfigs) {
