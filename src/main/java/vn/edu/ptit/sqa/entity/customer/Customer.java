@@ -19,4 +19,8 @@ public class Customer {
     private Gender gender;
 
     private IdentityCard identityCard;
+
+    public String getFullName() {
+        return this.firstname + " " + this.lastname;
+    }
 }

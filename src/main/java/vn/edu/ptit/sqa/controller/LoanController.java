@@ -8,13 +8,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import vn.edu.ptit.sqa.dto.loan.CustomerLoanListing;
 import vn.edu.ptit.sqa.dto.loan.DetailLoan;
+import vn.edu.ptit.sqa.dto.loan.LoanDTO;
+import vn.edu.ptit.sqa.model.Pagination;
+import vn.edu.ptit.sqa.model.ResultPage;
 import vn.edu.ptit.sqa.service.LoanService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/loans")
 @RequiredArgsConstructor
 public class LoanController {
     private final LoanService loanService;
+
+    @GetMapping("")
+    @PreAuthorize("hasAnyRole('MANAGER', 'EMPLOYEE')")
+    public ResultPage<LoanDTO> getAllLoans(Pagination pagination) {
+        return loanService.getAllLoans(pagination);
+    }
 
     @GetMapping("/customers/{id}")
     @PreAuthorize("hasAnyRole('MANAGER', 'EMPLOYEE')")

@@ -1,14 +1,19 @@
 package vn.edu.ptit.sqa.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import vn.edu.ptit.sqa.dto.customer.CustomerDTO;
 import vn.edu.ptit.sqa.dto.loan.CustomerLoanListing;
 import vn.edu.ptit.sqa.dto.loan.CustomerLoanDTO;
 import vn.edu.ptit.sqa.dto.loan.DetailLoan;
+import vn.edu.ptit.sqa.dto.loan.LoanDTO;
 import vn.edu.ptit.sqa.entity.customer.Customer;
 import vn.edu.ptit.sqa.entity.loan.Loan;
 import vn.edu.ptit.sqa.exception.ClientVisibleException;
+import vn.edu.ptit.sqa.model.Pagination;
+import vn.edu.ptit.sqa.model.ResultPage;
 import vn.edu.ptit.sqa.repository.CustomerRepository;
 import vn.edu.ptit.sqa.repository.LoanRepository;
 import vn.edu.ptit.sqa.service.LoanService;
@@ -39,5 +44,18 @@ public class LoanServiceImpl implements LoanService {
         Loan loan = loanRepository.findById(id).orElseThrow(() -> new ClientVisibleException("{loan.not_exist}"));
 
         return new DetailLoan(loan);
+    }
+
+    @Override
+    public ResultPage<LoanDTO> getAllLoans(Pagination pagination) {
+        Page<Loan> loans = loanRepository.findAll(PageRequest.of(
+            pagination.getPage(),
+            pagination.getSize()
+        ));
+
+        return ResultPage.<LoanDTO>builder()
+            .totalPages(loans.getTotalPages())
+            .items(loans.map(LoanDTO::new).toList())
+            .build();
     }
 }
