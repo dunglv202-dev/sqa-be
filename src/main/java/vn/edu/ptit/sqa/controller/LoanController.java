@@ -11,6 +11,7 @@ import vn.edu.ptit.sqa.dto.loan.DetailLoan;
 import vn.edu.ptit.sqa.dto.loan.LoanDTO;
 import vn.edu.ptit.sqa.model.Pagination;
 import vn.edu.ptit.sqa.model.ResultPage;
+import vn.edu.ptit.sqa.model.spec.LoanSpec;
 import vn.edu.ptit.sqa.service.LoanService;
 
 import java.util.List;
@@ -23,8 +24,8 @@ public class LoanController {
 
     @GetMapping("")
     @PreAuthorize("hasAnyRole('MANAGER', 'EMPLOYEE')")
-    public ResultPage<LoanDTO> getAllLoans(Pagination pagination) {
-        return loanService.getAllLoans(pagination);
+    public ResultPage<LoanDTO> getAllLoans(LoanSpec spec, Pagination pagination) {
+        return loanService.getAllLoans(spec, pagination);
     }
 
     @GetMapping("/customers/{id}")

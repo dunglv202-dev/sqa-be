@@ -2,6 +2,7 @@ package vn.edu.ptit.sqa.repository;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import vn.edu.ptit.sqa.entity.customer.Customer;
@@ -12,7 +13,7 @@ import vn.edu.ptit.sqa.model.NewLoanSummary;
 import java.time.LocalDate;
 import java.util.List;
 
-public interface LoanRepository extends JpaRepository<Loan, Long> {
+public interface LoanRepository extends JpaRepository<Loan, Long>, JpaSpecificationExecutor<Loan> {
     @Query("""
         SELECT new vn.edu.ptit.sqa.model.NewLoanSummary(COUNT(*), SUM(l.amount))
         FROM Loan l

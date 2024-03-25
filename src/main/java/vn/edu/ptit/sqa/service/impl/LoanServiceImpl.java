@@ -14,6 +14,7 @@ import vn.edu.ptit.sqa.entity.loan.Loan;
 import vn.edu.ptit.sqa.exception.ClientVisibleException;
 import vn.edu.ptit.sqa.model.Pagination;
 import vn.edu.ptit.sqa.model.ResultPage;
+import vn.edu.ptit.sqa.model.spec.LoanSpec;
 import vn.edu.ptit.sqa.repository.CustomerRepository;
 import vn.edu.ptit.sqa.repository.LoanRepository;
 import vn.edu.ptit.sqa.service.LoanService;
@@ -47,8 +48,8 @@ public class LoanServiceImpl implements LoanService {
     }
 
     @Override
-    public ResultPage<LoanDTO> getAllLoans(Pagination pagination) {
-        Page<Loan> loans = loanRepository.findAll(PageRequest.of(
+    public ResultPage<LoanDTO> getAllLoans(LoanSpec spec, Pagination pagination) {
+        Page<Loan> loans = loanRepository.findAll(spec.build(), PageRequest.of(
             pagination.getPage(),
             pagination.getSize()
         ));
