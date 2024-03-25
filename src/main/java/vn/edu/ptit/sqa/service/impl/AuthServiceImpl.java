@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import vn.edu.ptit.sqa.config.SecurityConfig;
 import vn.edu.ptit.sqa.dto.auth.AuthResult;
 import vn.edu.ptit.sqa.dto.auth.LoginDTO;
+import vn.edu.ptit.sqa.entity.auth.Authority;
+import vn.edu.ptit.sqa.entity.auth.User;
 import vn.edu.ptit.sqa.exception.UnauthenticatedException;
 import vn.edu.ptit.sqa.helper.JwtProvider;
 import vn.edu.ptit.sqa.model.ApplicationUser;
@@ -34,9 +36,11 @@ public class AuthServiceImpl implements AuthService {
                 )
             );
             String accessToken = generateAccessToken(authentication);
+            User user = ((ApplicationUser) authentication.getPrincipal()).getUser();
 
             return AuthResult.builder()
-                .displayName(((ApplicationUser) authentication.getPrincipal()).getUser().getDisplayName())
+                .displayName(user.getDisplayName())
+                .authorities(user.getAuthorities().stream().map(Authority::getCode).toList())
                 .accessToken(accessToken)
                 .build();
         } catch (BadCredentialsException e) {
