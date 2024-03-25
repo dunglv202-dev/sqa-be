@@ -3,6 +3,7 @@ package vn.edu.ptit.sqa.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import vn.edu.ptit.sqa.constant.LoanType;
 import vn.edu.ptit.sqa.dto.config.*;
 import vn.edu.ptit.sqa.model.Pagination;
 import vn.edu.ptit.sqa.model.ResultPage;
@@ -15,6 +16,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ConfigController {
     private final ConfigService configService;
+
+    @GetMapping("/loan")
+    @PreAuthorize("hasAnyRole('MANAGER', 'DIRECTOR')")
+    public List<LoanConfigDTO> getCurrentLoanConfigs(@RequestParam LoanType type) {
+        return configService.getCurrentLoanConfigs(type);
+    }
 
     @PostMapping("/loan")
     @PreAuthorize("hasRole('MANAGER')")

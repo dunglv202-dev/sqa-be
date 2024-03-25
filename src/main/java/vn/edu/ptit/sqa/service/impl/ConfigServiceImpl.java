@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import vn.edu.ptit.sqa.constant.ConfigStatus;
 import vn.edu.ptit.sqa.constant.ConfigType;
+import vn.edu.ptit.sqa.constant.LoanType;
 import vn.edu.ptit.sqa.constant.Term;
 import vn.edu.ptit.sqa.dto.config.*;
 import vn.edu.ptit.sqa.entity.Option;
@@ -54,7 +55,7 @@ public class ConfigServiceImpl implements ConfigService {
         List<LoanConfig> loanConfigs = loanConfigReq.toConfigList();
 
         // require loan config for all purposes
-        if (!isMatchPurposeSet(loanConfigs)) {
+        if (!isMatchPurposeSet(loanConfigReq.getType(), loanConfigs)) {
             throw new ClientVisibleException("{loan.config.purpose.same_set}");
         }
 
@@ -136,11 +137,27 @@ public class ConfigServiceImpl implements ConfigService {
             .toList();
     }
 
-    private boolean isMatchPurposeSet(List<LoanConfig> loanConfigs) {
-        List<Long> purposes = loanPurposeRepository.findAll()
+    @Override
+    public List<LoanConfigDTO> getCurrentLoanConfigs(LoanType type) {
+        ConfigType configType = type == LoanType.SECURED ? ConfigType.SECURED_LOAN : ConfigType.UNSECURED_LOAN;
+
+        ConfigHistory lastConfig = configHistoryRepository.findLatestApprovedConfig(configType)
+            .orElseThrow(() -> new ClientVisibleException("{config.no_active_found}"));
+
+        List<LoanConfig> loanConfigs = loanConfigRepository.findAllByConfigHistory(lastConfig);
+
+        return loanConfigs.stream()
+            .map(LoanConfigDTO::new)
+            .sorted((f, s) -> f.getPurpose().getLabel().compareToIgnoreCase(s.getPurpose().getLabel()))
+            .toList();
+    }
+
+    private boolean isMatchPurposeSet(LoanType type, List<LoanConfig> loanConfigs) {
+        List<Long> purposes = loanPurposeRepository.findAllByLoanType(type)
             .stream()
             .map(Option::getId)
             .toList();
+
         Set<Long> configuredPurposes = loanConfigs
             .stream()
             .map(loanConfig -> loanConfig.getPurpose().getId())
