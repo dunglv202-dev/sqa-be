@@ -1,6 +1,7 @@
 package vn.edu.ptit.sqa.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import vn.edu.ptit.sqa.entity.customer.Customer;
@@ -12,7 +13,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-public interface SavingRepository extends JpaRepository<Saving, Long> {
+public interface SavingRepository extends JpaRepository<Saving, Long>, JpaSpecificationExecutor<Saving> {
     @Query("""
         SELECT new vn.edu.ptit.sqa.model.NewSavingSummary(COUNT(*), SUM(s.amount))
         FROM Saving s

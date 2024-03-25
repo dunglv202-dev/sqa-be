@@ -9,22 +9,22 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
-public class SavingDTO {
+public class CustomerSavingDTO {
     private Long id;
-    private String customer;
-    private String idCardNo;
-    private LocalDate depositDate;
-    private int termInMonth;
     private BigDecimal amount;
     private double yearlyInterestRate;
+    private int termInMonth;
+    private LocalDate dueDate;
+    private LocalDate depositDate;
+    private LocalDate withdrawDate;
 
-    public SavingDTO(Saving saving) {
+    public CustomerSavingDTO(Saving saving) {
         this.id = saving.getId();
-        this.customer = saving.getCustomer().getFullName();
-        this.idCardNo = saving.getCustomer().getIdentityCard().getIdNumber();
-        this.depositDate = saving.getDepositDate();
-        this.termInMonth = saving.getTermInMonth();
         this.amount = saving.getAmount();
         this.yearlyInterestRate = saving.getYearlyInterestRate();
+        this.termInMonth = saving.getTermInMonth();
+        this.dueDate = saving.getDueDate();
+        this.depositDate = saving.getDepositDate();
+        this.withdrawDate = saving.getWithdrawDate();
     }
 }

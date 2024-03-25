@@ -1,12 +1,18 @@
 package vn.edu.ptit.sqa.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import vn.edu.ptit.sqa.dto.customer.CustomerDTO;
+import vn.edu.ptit.sqa.dto.saving.CustomerSavingDTO;
 import vn.edu.ptit.sqa.dto.saving.CustomerSavingListing;
 import vn.edu.ptit.sqa.dto.saving.SavingDTO;
 import vn.edu.ptit.sqa.entity.customer.Customer;
 import vn.edu.ptit.sqa.entity.saving.Saving;
+import vn.edu.ptit.sqa.model.Pagination;
+import vn.edu.ptit.sqa.model.ResultPage;
+import vn.edu.ptit.sqa.model.spec.SavingSpec;
 import vn.edu.ptit.sqa.repository.CustomerRepository;
 import vn.edu.ptit.sqa.repository.SavingRepository;
 import vn.edu.ptit.sqa.service.SavingService;
@@ -28,7 +34,20 @@ public class SavingServiceImpl implements SavingService {
 
         return CustomerSavingListing.builder()
             .customer(new CustomerDTO(customer))
-            .savingAccounts(savingAccounts.stream().map(SavingDTO::new).toList())
+            .savingAccounts(savingAccounts.stream().map(CustomerSavingDTO::new).toList())
+            .build();
+    }
+
+    @Override
+    public ResultPage<SavingDTO> getAllSavings(SavingSpec spec, Pagination pagination) {
+        Page<Saving> savings = savingRepository.findAll(spec.build(), PageRequest.of(
+            pagination.getPage(),
+            pagination.getSize()
+        ));
+
+        return ResultPage.<SavingDTO>builder()
+            .totalPages(savings.getTotalPages())
+            .items(savings.map(SavingDTO::new).toList())
             .build();
     }
 }
