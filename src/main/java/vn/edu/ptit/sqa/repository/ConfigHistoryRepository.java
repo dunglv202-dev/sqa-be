@@ -33,6 +33,7 @@ public interface ConfigHistoryRepository extends JpaRepository<ConfigHistory, In
         WHERE c.configType = :configType
             AND c.status = vn.edu.ptit.sqa.constant.ConfigStatus.APPROVED
         ORDER BY c.updatedAt DESC
+        LIMIT 1
     """)
     Optional<ConfigHistory> findLatestApprovedConfig(@Param("configType") ConfigType configType);
 }
