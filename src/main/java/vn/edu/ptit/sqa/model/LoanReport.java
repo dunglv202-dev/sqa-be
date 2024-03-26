@@ -11,8 +11,13 @@ import java.util.List;
 @Setter
 @Builder
 public class LoanReport {
-    private long numberOfLoan;
+    private Long numberOfLoan;
     private BigDecimal amountForLending;
     private BigDecimal incomeFromLoanInterest;
+    private Integer numberOfNewCustomer;
+    private BigDecimal interestAmount;
+    private Long uncollectedDueLoan;
+    private BigDecimal uncollectedAmount;
     private List<LoanPurposeDistribution> purposeDistribution;
+    private List<LoanTypeDistribution> typeDistributions;
 }

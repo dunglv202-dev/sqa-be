@@ -33,12 +33,19 @@ public class ReportServiceImpl implements ReportService {
 
     public LoanReport generateLoanReport(LocalDate from, LocalDate to) {
         NewLoanSummary loanSummary = loanRepository.summaryForNewLoan(from, to);
+        UncollectedLoanSummary uncollectedLoanSummary = loanRepository.summaryForUncollectedLoan(from, to);
+        int newCustomer = loanRepository.countNewCustomer(from, to);
         List<LoanPurposeDistribution> loanPurposeDistributions = loanRepository.getLoanDistributionByPurpose(from, to);
+        List<LoanTypeDistribution> loanTypeDistributions = loanRepository.getLoanDistributionByType(from, to);
 
         return LoanReport.builder()
             .numberOfLoan(loanSummary.getNewLoan())
             .amountForLending(Objects.requireNonNullElse(loanSummary.getTotalAmount(), BigDecimal.ZERO))
+            .numberOfNewCustomer(newCustomer)
             .purposeDistribution(loanPurposeDistributions)
+            .uncollectedDueLoan(uncollectedLoanSummary.getUncollectedDueLoan())
+            .uncollectedAmount(uncollectedLoanSummary.getUncollectedAmount())
+            .typeDistributions(loanTypeDistributions)
             .build();
     }
 
