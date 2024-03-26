@@ -13,7 +13,7 @@ import java.util.Objects;
 
 @Getter
 @Setter
-public class LoanConfigDTO implements ConfigDTO {
+public class NewLoanConfigDTO implements ConfigDTO {
     @NotNull(message = "{loan.config.purpose.required}")
     private Long purposeId;
 
@@ -39,7 +39,7 @@ public class LoanConfigDTO implements ConfigDTO {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        LoanConfigDTO that = (LoanConfigDTO) o;
+        NewLoanConfigDTO that = (NewLoanConfigDTO) o;
         return Objects.equals(purposeId, that.purposeId);
     }
 

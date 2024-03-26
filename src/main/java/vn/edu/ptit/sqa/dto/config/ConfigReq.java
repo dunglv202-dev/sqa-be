@@ -19,8 +19,6 @@ import java.util.Set;
 public abstract class ConfigReq<C> {
     private ConfigHistory configHistory;
 
-    @NotNull(message = "{config.summary.required}")
-    @NotBlank(message = "{config.summary.required}")
     protected String summary;
 
     @Future(message = "{config.start_date.future}")

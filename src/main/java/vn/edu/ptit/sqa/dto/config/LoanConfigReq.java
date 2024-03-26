@@ -13,7 +13,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class LoanConfigReq extends ConfigReq<LoanConfigDTO> {
+public class LoanConfigReq extends ConfigReq<NewLoanConfigDTO> {
     @NotNull(message = "{loan.config.type.required}")
     private LoanType type;
 

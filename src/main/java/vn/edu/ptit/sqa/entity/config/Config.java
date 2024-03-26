@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 @MappedSuperclass
 public abstract class Config {
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST})
     protected ConfigHistory configHistory;
 
     public abstract Integer getId();

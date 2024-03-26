@@ -2,6 +2,9 @@ package vn.edu.ptit.sqa.constant;
 
 import lombok.Getter;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
+
 @Getter
 public enum Term {
     ONE_MONTH(1),

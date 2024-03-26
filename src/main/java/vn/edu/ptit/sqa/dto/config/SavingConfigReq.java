@@ -7,7 +7,7 @@ import vn.edu.ptit.sqa.entity.config.SavingConfig;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SavingConfigReq extends ConfigReq<SavingConfigDTO> {
+public class SavingConfigReq extends ConfigReq<NewSavingConfigDTO> {
     public ConfigHistory toHistoryEntity() {
         ConfigHistory configHistory = super.toHistoryEntity();
         configHistory.setConfigType(ConfigType.SAVING);
