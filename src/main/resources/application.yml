@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/sqa?createDatabaseIfNotExist=true
+    url: jdbc:mysql://0.tcp.ap.ngrok.io:19795/sqa?createDatabaseIfNotExist=true
     username: root
     password: root
   jpa:

@@ -6,7 +6,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import vn.edu.ptit.sqa.dto.loan.DetailLoan;
 import vn.edu.ptit.sqa.dto.saving.CustomerSavingListing;
+import vn.edu.ptit.sqa.dto.saving.DetailSaving;
 import vn.edu.ptit.sqa.dto.saving.SavingDTO;
 import vn.edu.ptit.sqa.model.Pagination;
 import vn.edu.ptit.sqa.model.ResultPage;
@@ -29,5 +31,11 @@ public class SavingController {
     @PreAuthorize("hasAnyRole('MANAGER', 'EMPLOYEE')")
     public CustomerSavingListing getCustomerSavingAccounts(@PathVariable Long id) {
         return savingService.getCustomerSavingAccounts(id);
+    }
+
+    @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('MANAGER', 'EMPLOYEE')")
+    public DetailSaving getLoanDetail(@PathVariable Long id) {
+        return savingService.getDetailSaving(id);
     }
 }

@@ -7,9 +7,11 @@ import org.springframework.stereotype.Service;
 import vn.edu.ptit.sqa.dto.customer.CustomerDTO;
 import vn.edu.ptit.sqa.dto.saving.CustomerSavingDTO;
 import vn.edu.ptit.sqa.dto.saving.CustomerSavingListing;
+import vn.edu.ptit.sqa.dto.saving.DetailSaving;
 import vn.edu.ptit.sqa.dto.saving.SavingDTO;
 import vn.edu.ptit.sqa.entity.customer.Customer;
 import vn.edu.ptit.sqa.entity.saving.Saving;
+import vn.edu.ptit.sqa.exception.ClientVisibleException;
 import vn.edu.ptit.sqa.model.Pagination;
 import vn.edu.ptit.sqa.model.ResultPage;
 import vn.edu.ptit.sqa.model.spec.SavingSpec;
@@ -49,5 +51,13 @@ public class SavingServiceImpl implements SavingService {
             .totalPages(savings.getTotalPages())
             .items(savings.map(SavingDTO::new).toList())
             .build();
+    }
+
+    @Override
+    public DetailSaving getDetailSaving(Long id) {
+        Saving saving = savingRepository.findById(id)
+            .orElseThrow(() -> new ClientVisibleException("{saving.not_exist}"));
+
+        return new DetailSaving(saving);
     }
 }
