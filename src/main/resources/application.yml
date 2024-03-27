@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:mysql://0.tcp.ap.ngrok.io:19795/sqa?createDatabaseIfNotExist=true
+    url: jdbc:mysql://monorail.proxy.rlwy.net:15007/railway?createDatabaseIfNotExist=true
     username: root
-    password: root
+    password: jDysimLBIXwGfESVEzsizqvfFdpCFxJf
   jpa:
     show-sql: true
     generate-ddl: true
