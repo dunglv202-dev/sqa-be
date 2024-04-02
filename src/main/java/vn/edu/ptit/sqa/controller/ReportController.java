@@ -20,19 +20,19 @@ public class ReportController {
 
     /* TODO: add validation for period */
     @GetMapping("/general")
-    @PreAuthorize("hasRole('MANAGER')")
+    @PreAuthorize("hasAnyRole('MANAGER', 'DIRECTOR')")
     public GeneralReport getGeneralReport(@Valid Period period) {
         return reportService.generateGeneralReport(period.getFrom(), period.getTo());
     }
 
     @GetMapping("/loan")
-    @PreAuthorize("hasRole('MANAGER')")
+    @PreAuthorize("hasAnyRole('MANAGER', 'DIRECTOR')")
     public LoanReport getLoanReport(@Valid Period period) {
         return reportService.generateLoanReport(period.getFrom(), period.getTo());
     }
 
     @GetMapping("/saving")
-    @PreAuthorize("hasRole('MANAGER')")
+    @PreAuthorize("hasAnyRole('MANAGER', 'DIRECTOR')")
     public SavingReport getSavingReport(@Valid Period period) {
         return reportService.generateSavingReport(period.getFrom(), period.getTo());
     }

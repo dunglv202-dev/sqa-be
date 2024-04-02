@@ -23,19 +23,19 @@ public class LoanController {
     private final LoanService loanService;
 
     @GetMapping("")
-    @PreAuthorize("hasAnyRole('MANAGER', 'EMPLOYEE')")
+    @PreAuthorize("hasAnyRole('MANAGER', 'EMPLOYEE', 'DIRECTOR')")
     public ResultPage<LoanDTO> getAllLoans(LoanSpec spec, Pagination pagination) {
         return loanService.getAllLoans(spec, pagination);
     }
 
     @GetMapping("/customers/{id}")
-    @PreAuthorize("hasAnyRole('MANAGER', 'EMPLOYEE')")
+    @PreAuthorize("hasAnyRole('MANAGER', 'EMPLOYEE', 'DIRECTOR')")
     public CustomerLoanListing getCustomerLoans(@PathVariable Long id) {
         return loanService.getCustomerLoans(id);
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAnyRole('MANAGER', 'EMPLOYEE')")
+    @PreAuthorize("hasAnyRole('MANAGER', 'EMPLOYEE', 'DIRECTOR')")
     public DetailLoan getLoanDetail(@PathVariable Long id) {
         return loanService.getDetailLoan(id);
     }

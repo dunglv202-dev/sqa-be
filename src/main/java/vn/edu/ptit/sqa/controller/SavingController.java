@@ -22,19 +22,19 @@ public class SavingController {
     private final SavingService savingService;
 
     @GetMapping("")
-    @PreAuthorize("hasAnyRole('MANAGER', 'EMPLOYEE')")
+    @PreAuthorize("hasAnyRole('MANAGER', 'EMPLOYEE', 'DIRECTOR')")
     public ResultPage<SavingDTO> getAllSavings(SavingSpec spec, Pagination pagination) {
         return savingService.getAllSavings(spec, pagination);
     }
 
     @GetMapping("/customers/{id}")
-    @PreAuthorize("hasAnyRole('MANAGER', 'EMPLOYEE')")
+    @PreAuthorize("hasAnyRole('MANAGER', 'EMPLOYEE', 'DIRECTOR')")
     public CustomerSavingListing getCustomerSavingAccounts(@PathVariable Long id) {
         return savingService.getCustomerSavingAccounts(id);
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAnyRole('MANAGER', 'EMPLOYEE')")
+    @PreAuthorize("hasAnyRole('MANAGER', 'EMPLOYEE', 'DIRECTOR')")
     public DetailSaving getLoanDetail(@PathVariable Long id) {
         return savingService.getDetailSaving(id);
     }
