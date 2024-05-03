@@ -25,7 +25,7 @@ import java.util.List;
 @EnableMethodSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
-    public static final Duration ACCESS_TOKEN_LIFETIME = Duration.ofMinutes(30);
+    public static final Duration ACCESS_TOKEN_LIFETIME = Duration.ofMinutes(3000);
     public static final String TOKEN_CLAIM_AUTHORITY = "authorities";
 
     private final JwtAuthFiler jwtAuthFilter;
