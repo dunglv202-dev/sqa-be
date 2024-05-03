@@ -29,7 +29,7 @@ public interface SavingRepository extends JpaRepository<Saving, Long>, JpaSpecif
             CAST(s.amount + s.termInMonth * s.amount * s.yearlyInterestRate / 12 AS BIGDECIMAL)
         )
         FROM Saving s
-        WHERE s.depositDate BETWEEN :from AND :to
+        WHERE s.withdrawDate BETWEEN :from AND :to
     """)
     Optional<DueSavingPayment> getDueSavingPaymentInfo(@Param("from") LocalDate from, @Param("to") LocalDate to);
 }
