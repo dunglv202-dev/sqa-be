@@ -16,7 +16,7 @@ public class SavingConfig extends Config {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private int termInMonth;
+    private Integer termInMonth;
 
     private double yearlyInterestRate;
 }
