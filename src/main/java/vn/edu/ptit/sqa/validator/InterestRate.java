@@ -16,7 +16,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Target({ FIELD, PARAMETER, ANNOTATION_TYPE })
 @Retention(RUNTIME)
 @Constraint(validatedBy = {})
-@DecimalMax(value = "1", message = "{interest_rate.invalid}")
+@DecimalMax(value = "0.2", message = "{interest_rate.invalid}")
 @PositiveOrZero(message = "{interest_rate.invalid}")
 @Documented
 public @interface InterestRate {

@@ -1,4 +1,6 @@
 spring:
+  profiles:
+    active: local
   datasource:
     url: jdbc:mysql://${DB_HOST}/sqa?createDatabaseIfNotExist=true
     username: ${DB_USER}
