@@ -12,6 +12,4 @@ import java.math.BigDecimal;
 public class SavingReport {
     private long numberOfSavingAccount;
     private BigDecimal depositAmount;
-    private BigDecimal amountPayForDueAccount;
-    private BigDecimal interestPayForDueAccount;
 }
