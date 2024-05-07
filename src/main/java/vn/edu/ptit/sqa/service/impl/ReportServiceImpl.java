@@ -52,10 +52,14 @@ public class ReportServiceImpl implements ReportService {
     @Override
     public SavingReport generateSavingReport(LocalDate from, LocalDate to) {
         NewSavingSummary savingSummary = savingRepository.summaryForNewSaving(from, to);
+        int numberOfWithdraw = savingRepository.getNumberOfWithdraw(from, to);
+        int dueAccountNotWithdraw = savingRepository.getDueAccountNotWithdraw(to);
 
         return SavingReport.builder()
             .numberOfSavingAccount(savingSummary.getNewSaving())
             .depositAmount(Objects.requireNonNullElse(savingSummary.getTotalDepositAmount(), BigDecimal.ZERO))
+            .numberOfWithdraw(numberOfWithdraw)
+            .dueAccountNotWithdraw(dueAccountNotWithdraw)
             .build();
     }
 }

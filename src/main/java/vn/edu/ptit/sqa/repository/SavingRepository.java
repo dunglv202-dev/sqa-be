@@ -20,4 +20,18 @@ public interface SavingRepository extends JpaRepository<Saving, Long>, JpaSpecif
     NewSavingSummary summaryForNewSaving(@Param("from") LocalDate from, @Param("to") LocalDate to);
 
     List<Saving> findAllByCustomer(Customer customer);
+
+    @Query("""
+        SELECT COUNT(*)
+        FROM Saving s
+        WHERE s.withdrawDate >= :from AND s.withdrawDate <= :to
+    """)
+    int getNumberOfWithdraw(@Param("from") LocalDate from, @Param("to") LocalDate to);
+
+    @Query("""
+        SELECT COUNT(*)
+        FROM Saving s
+        WHERE s.dueDate <= :to AND s.withdrawDate > :to
+    """)
+    int getDueAccountNotWithdraw(@Param("to") LocalDate to);
 }
