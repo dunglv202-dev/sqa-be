@@ -38,7 +38,7 @@ public class ConfigController {
     @PostMapping("/loan")
     @PreAuthorize("hasRole('MANAGER')")
     public void changeLoanConfig(@RequestBody LoanConfigReq loanConfigReq) {
-        configService.changeLoanConfig(loanConfigReq);
+        configService.createNewLoanConfig(loanConfigReq);
     }
 
     @GetMapping("/saving")
@@ -50,7 +50,7 @@ public class ConfigController {
     @PostMapping("/saving")
     @PreAuthorize("hasRole('MANAGER')")
     public void changeSavingConfig(@RequestBody SavingConfigReq savingConfigReq) {
-        configService.changeSavingConfig(savingConfigReq);
+        configService.createNewSavingConfig(savingConfigReq);
     }
 
     @GetMapping("/resolved")

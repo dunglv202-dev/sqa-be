@@ -13,6 +13,7 @@ import java.util.List;
 @Getter
 @Setter
 public class DetailLoan {
+    private Long id;
     private ExtendedCustomerDTO customer;
     private BigDecimal amount;
     private BigDecimal remaining;
@@ -24,6 +25,7 @@ public class DetailLoan {
     private LoanType type;
 
     public DetailLoan(Loan loan) {
+        this.id = loan.getId();
         this.customer = new ExtendedCustomerDTO(loan.getCustomer());
         this.customer.setJob(loan.getJob().getLabel());
         this.customer.setMonthlyIncome(loan.getMonthlyIncome());

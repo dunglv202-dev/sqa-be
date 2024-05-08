@@ -49,10 +49,6 @@ public class AuthServiceImpl implements AuthService {
     }
 
     private String generateAccessToken(Authentication authentication) {
-        if (!authentication.isAuthenticated()) {
-            throw new RuntimeException("Could not generate access token for unauthenticated instance");
-        }
-
         ApplicationUser user = (ApplicationUser) authentication.getPrincipal();
         Map<String, Object> claims = new HashMap<>();
         claims.put(

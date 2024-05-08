@@ -6,6 +6,7 @@ import vn.edu.ptit.sqa.entity.loan.Loan;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -24,5 +25,10 @@ public class CustomerLoanDTO {
         this.dueDate = loan.getDueDate();
         this.yearlyInterestRate = loan.getYearlyInterestRate();
         this.createdAt = loan.getCreatedAt();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof CustomerLoanDTO && Objects.equals(((CustomerLoanDTO) obj).getId(), this.id);
     }
 }

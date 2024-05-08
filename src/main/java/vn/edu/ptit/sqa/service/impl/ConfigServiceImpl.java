@@ -48,7 +48,7 @@ public class ConfigServiceImpl implements ConfigService {
 
     @Override
     @Transactional
-    public void changeLoanConfig(@Valid LoanConfigReq loanConfigReq) {
+    public void createNewLoanConfig(@Valid LoanConfigReq loanConfigReq) {
         ConfigHistory configHistory = loanConfigReq.toHistoryEntity();
         configHistory.setCreatedBy(authHelper.getSignedUser());
 
@@ -65,7 +65,7 @@ public class ConfigServiceImpl implements ConfigService {
 
     @Override
     @Transactional
-    public void changeSavingConfig(@Valid SavingConfigReq savingConfigReq) {
+    public void createNewSavingConfig(@Valid SavingConfigReq savingConfigReq) {
         ConfigHistory configHistory = savingConfigReq.toHistoryEntity();
         configHistory.setCreatedBy(authHelper.getSignedUser());
 
