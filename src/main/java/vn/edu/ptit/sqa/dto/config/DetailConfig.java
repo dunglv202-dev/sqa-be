@@ -6,6 +6,8 @@ import lombok.Setter;
 import vn.edu.ptit.sqa.constant.ConfigType;
 import vn.edu.ptit.sqa.dto.auth.UserDTO;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -14,5 +16,6 @@ import java.util.List;
 public class DetailConfig<T> {
     private ConfigType type;
     private UserDTO userRequested;
+    private LocalDate startDate;
     private List<T> configs;
 }

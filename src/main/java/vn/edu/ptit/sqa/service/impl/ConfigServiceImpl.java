@@ -172,6 +172,7 @@ public class ConfigServiceImpl implements ConfigService {
         return DetailConfig.<LoanConfigDTO>builder()
             .userRequested(new UserDTO(configHistory.getCreatedBy()))
             .type(configHistory.getConfigType())
+            .startDate(configHistory.getStartDate())
             .configs(loanConfigs)
             .build();
     }
@@ -190,6 +191,7 @@ public class ConfigServiceImpl implements ConfigService {
         return DetailConfig.<SavingConfigDTO>builder()
             .userRequested(new UserDTO(configHistory.getCreatedBy()))
             .type(configHistory.getConfigType())
+            .startDate(configHistory.getStartDate())
             .configs(savingConfigs)
             .build();
     }
