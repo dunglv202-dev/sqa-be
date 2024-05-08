@@ -23,6 +23,18 @@ public class ConfigController {
         return configService.getCurrentLoanConfigs(type);
     }
 
+    @GetMapping("/loans/{id}")
+    @PreAuthorize("hasAnyRole('MANAGER', 'DIRECTOR')")
+    public DetailConfig<LoanConfigDTO> getLoanConfig(@PathVariable Integer id) {
+        return configService.getLoanConfig(id);
+    }
+
+    @GetMapping("/savings/{id}")
+    @PreAuthorize("hasAnyRole('MANAGER', 'DIRECTOR')")
+    public DetailConfig<SavingConfigDTO> getSavingConfig(@PathVariable Integer id) {
+        return configService.getSavingConfig(id);
+    }
+
     @PostMapping("/loan")
     @PreAuthorize("hasRole('MANAGER')")
     public void changeLoanConfig(@RequestBody LoanConfigReq loanConfigReq) {

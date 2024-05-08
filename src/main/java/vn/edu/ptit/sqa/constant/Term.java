@@ -13,6 +13,7 @@ public enum Term {
     THREE_MONTHS(3),
     FIVE_MONTHS(5),
     SIX_MONTHS(6),
+    NINE_MONTHS(9),
     TWELVE_MONTHS(12),
     THIRTEEN_MONTHS(13),
     FIFTEEN_MONTHS(15),

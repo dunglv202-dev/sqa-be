@@ -16,4 +16,6 @@ public interface ConfigService {
     ResultPage<ConfigHistoryDTO> getAllConfigHistory(Pagination pagination);
     List<SavingConfigDTO> getCurrentSavingConfigs();
     List<LoanConfigDTO> getCurrentLoanConfigs(LoanType type);
+    DetailConfig<LoanConfigDTO> getLoanConfig(Integer id);
+    DetailConfig<SavingConfigDTO> getSavingConfig(Integer id);
 }
