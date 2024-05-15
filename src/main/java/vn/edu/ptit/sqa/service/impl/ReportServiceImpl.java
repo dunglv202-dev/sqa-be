@@ -33,7 +33,7 @@ public class ReportServiceImpl implements ReportService {
 
     public LoanReport generateLoanReport(LocalDate from, LocalDate to) {
         NewLoanSummary loanSummary = loanRepository.summaryForNewLoan(from, to);
-        UncollectedLoanSummary uncollectedLoanSummary = loanRepository.summaryForUncollectedLoan(from, to);
+        UncollectedLoanSummary uncollectedLoanSummary = loanRepository.summaryForUncollectedLoan(to);
         int newCustomer = loanRepository.countNewCustomer(from, to);
         List<LoanPurposeDistribution> loanPurposeDistributions = loanRepository.getLoanDistributionByPurpose(from, to);
         List<LoanTypeDistribution> loanTypeDistributions = loanRepository.getLoanDistributionByType(from, to);
@@ -52,14 +52,14 @@ public class ReportServiceImpl implements ReportService {
     @Override
     public SavingReport generateSavingReport(LocalDate from, LocalDate to) {
         NewSavingSummary savingSummary = savingRepository.summaryForNewSaving(from, to);
-        DueSavingPayment dueSavingPayment = savingRepository.getDueSavingPaymentInfo(from, to)
-            .orElse(new DueSavingPayment());
+        int numberOfWithdraw = savingRepository.getNumberOfWithdraw(from, to);
+        int dueAccountNotWithdraw = savingRepository.getDueAccountNotWithdraw(to);
 
         return SavingReport.builder()
             .numberOfSavingAccount(savingSummary.getNewSaving())
             .depositAmount(Objects.requireNonNullElse(savingSummary.getTotalDepositAmount(), BigDecimal.ZERO))
-            .amountPayForDueAccount(Objects.requireNonNullElse(dueSavingPayment.getTotalToPay(), BigDecimal.ZERO))
-            .interestPayForDueAccount(Objects.requireNonNullElse(dueSavingPayment.getInterestToPay(), BigDecimal.ZERO))
+            .numberOfWithdraw(numberOfWithdraw)
+            .dueAccountNotWithdraw(dueAccountNotWithdraw)
             .build();
     }
 }

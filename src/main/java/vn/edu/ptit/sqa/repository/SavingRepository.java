@@ -6,12 +6,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import vn.edu.ptit.sqa.entity.customer.Customer;
 import vn.edu.ptit.sqa.entity.saving.Saving;
-import vn.edu.ptit.sqa.model.DueSavingPayment;
 import vn.edu.ptit.sqa.model.NewSavingSummary;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 public interface SavingRepository extends JpaRepository<Saving, Long>, JpaSpecificationExecutor<Saving> {
     @Query("""
@@ -24,12 +22,16 @@ public interface SavingRepository extends JpaRepository<Saving, Long>, JpaSpecif
     List<Saving> findAllByCustomer(Customer customer);
 
     @Query("""
-        SELECT new vn.edu.ptit.sqa.model.DueSavingPayment(
-            CAST(s.termInMonth * s.amount * s.yearlyInterestRate / 12 AS BIGDECIMAL),
-            CAST(s.amount + s.termInMonth * s.amount * s.yearlyInterestRate / 12 AS BIGDECIMAL)
-        )
+        SELECT COUNT(*)
         FROM Saving s
-        WHERE s.withdrawDate BETWEEN :from AND :to
+        WHERE s.withdrawDate >= :from AND s.withdrawDate <= :to
     """)
-    Optional<DueSavingPayment> getDueSavingPaymentInfo(@Param("from") LocalDate from, @Param("to") LocalDate to);
+    int getNumberOfWithdraw(@Param("from") LocalDate from, @Param("to") LocalDate to);
+
+    @Query("""
+        SELECT COUNT(*)
+        FROM Saving s
+        WHERE s.dueDate <= :to AND s.withdrawDate > :to
+    """)
+    int getDueAccountNotWithdraw(@Param("to") LocalDate to);
 }

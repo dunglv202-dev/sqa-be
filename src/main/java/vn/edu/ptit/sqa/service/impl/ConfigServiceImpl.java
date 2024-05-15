@@ -12,6 +12,7 @@ import vn.edu.ptit.sqa.constant.ConfigStatus;
 import vn.edu.ptit.sqa.constant.ConfigType;
 import vn.edu.ptit.sqa.constant.LoanType;
 import vn.edu.ptit.sqa.constant.Term;
+import vn.edu.ptit.sqa.dto.auth.UserDTO;
 import vn.edu.ptit.sqa.dto.config.*;
 import vn.edu.ptit.sqa.entity.Option;
 import vn.edu.ptit.sqa.entity.config.ConfigHistory;
@@ -47,7 +48,7 @@ public class ConfigServiceImpl implements ConfigService {
 
     @Override
     @Transactional
-    public void changeLoanConfig(@Valid LoanConfigReq loanConfigReq) {
+    public void createNewLoanConfig(@Valid LoanConfigReq loanConfigReq) {
         ConfigHistory configHistory = loanConfigReq.toHistoryEntity();
         configHistory.setCreatedBy(authHelper.getSignedUser());
 
@@ -64,7 +65,7 @@ public class ConfigServiceImpl implements ConfigService {
 
     @Override
     @Transactional
-    public void changeSavingConfig(@Valid SavingConfigReq savingConfigReq) {
+    public void createNewSavingConfig(@Valid SavingConfigReq savingConfigReq) {
         ConfigHistory configHistory = savingConfigReq.toHistoryEntity();
         configHistory.setCreatedBy(authHelper.getSignedUser());
 
@@ -80,6 +81,7 @@ public class ConfigServiceImpl implements ConfigService {
     }
 
     @Override
+    @Transactional
     public void updateConfigReviewResult(Integer configId, ReviewConfigResultDTO reviewConfigResult) {
         ConfigHistory configHistory = configHistoryRepository.findById(configId)
             .orElseThrow(() -> new ClientVisibleException("{config.not_exist}"));
@@ -91,6 +93,11 @@ public class ConfigServiceImpl implements ConfigService {
         configHistory.setStatus(reviewConfigResult.isApproved() ? ConfigStatus.APPROVED : ConfigStatus.REJECTED);
         configHistory.setNote(reviewConfigResult.getNote());
 
+        if (reviewConfigResult.isApproved()) {
+            // reject all pending config of same type
+            configHistoryRepository.setOthersAsRejectedExcept(configHistory);
+        }
+
         configHistoryRepository.save(configHistory);
     }
 
@@ -99,7 +106,7 @@ public class ConfigServiceImpl implements ConfigService {
         Sort sort = Sort.by(Sort.Direction.DESC, ConfigHistory_.START_DATE);
 
         Page<ConfigHistory> configs = configHistoryRepository.findAllByStatusIn(
-            List.of(ConfigStatus.PENDING, ConfigStatus.EXPIRED),
+            List.of(ConfigStatus.PENDING),
             PageRequest.of(pagination.getPage(), pagination.getSize()).withSort(sort)
         );
 
@@ -150,6 +157,43 @@ public class ConfigServiceImpl implements ConfigService {
             .map(LoanConfigDTO::new)
             .sorted((f, s) -> f.getPurpose().getLabel().compareToIgnoreCase(s.getPurpose().getLabel()))
             .toList();
+    }
+
+    @Override
+    public DetailConfig<LoanConfigDTO> getLoanConfig(Integer id) {
+        ConfigHistory configHistory = configHistoryRepository.findById(id)
+            .orElseThrow();
+
+        List<LoanConfigDTO> loanConfigs = loanConfigRepository.findAllByConfigHistory(configHistory).stream()
+            .map(LoanConfigDTO::new)
+            .sorted((f, s) -> f.getPurpose().getLabel().compareToIgnoreCase(s.getPurpose().getLabel()))
+            .toList();;
+
+        return DetailConfig.<LoanConfigDTO>builder()
+            .userRequested(new UserDTO(configHistory.getCreatedBy()))
+            .type(configHistory.getConfigType())
+            .startDate(configHistory.getStartDate())
+            .configs(loanConfigs)
+            .build();
+    }
+
+    @Override
+    public DetailConfig<SavingConfigDTO> getSavingConfig(Integer id) {
+        ConfigHistory configHistory = configHistoryRepository.findById(id)
+            .orElseThrow();
+
+        List<SavingConfigDTO> savingConfigs = savingConfigRepository.findAllByConfigHistory(configHistory)
+            .stream()
+            .map(SavingConfigDTO::new)
+            .sorted(Comparator.comparingInt(SavingConfigDTO::getTermInMonth))
+            .toList();
+
+        return DetailConfig.<SavingConfigDTO>builder()
+            .userRequested(new UserDTO(configHistory.getCreatedBy()))
+            .type(configHistory.getConfigType())
+            .startDate(configHistory.getStartDate())
+            .configs(savingConfigs)
+            .build();
     }
 
     private boolean isMatchPurposeSet(LoanType type, List<LoanConfig> loanConfigs) {

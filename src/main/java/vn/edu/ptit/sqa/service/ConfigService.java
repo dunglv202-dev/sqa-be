@@ -9,11 +9,13 @@ import vn.edu.ptit.sqa.model.ResultPage;
 import java.util.List;
 
 public interface ConfigService {
-    void changeLoanConfig(@Valid LoanConfigReq loanConfigReq);
-    void changeSavingConfig(@Valid SavingConfigReq savingConfigReq);
+    void createNewLoanConfig(@Valid LoanConfigReq loanConfigReq);
+    void createNewSavingConfig(@Valid SavingConfigReq savingConfigReq);
     void updateConfigReviewResult(Integer configId, ReviewConfigResultDTO reviewConfigResult);
     ResultPage<ConfigHistoryDTO> getAllPendingConfig(Pagination pagination);
     ResultPage<ConfigHistoryDTO> getAllConfigHistory(Pagination pagination);
     List<SavingConfigDTO> getCurrentSavingConfigs();
     List<LoanConfigDTO> getCurrentLoanConfigs(LoanType type);
+    DetailConfig<LoanConfigDTO> getLoanConfig(Integer id);
+    DetailConfig<SavingConfigDTO> getSavingConfig(Integer id);
 }

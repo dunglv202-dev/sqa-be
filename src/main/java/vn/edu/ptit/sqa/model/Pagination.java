@@ -11,4 +11,13 @@ public class Pagination {
 
     @Max(value = 20, message = "{pagination.size.max}")
     private int size = 10;
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Pagination pagination)) {
+            return false;
+        }
+
+        return pagination.page == this.page && pagination.size == this.size;
+    }
 }

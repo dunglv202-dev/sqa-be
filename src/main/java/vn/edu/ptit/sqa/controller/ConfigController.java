@@ -23,10 +23,22 @@ public class ConfigController {
         return configService.getCurrentLoanConfigs(type);
     }
 
+    @GetMapping("/loans/{id}")
+    @PreAuthorize("hasAnyRole('MANAGER', 'DIRECTOR')")
+    public DetailConfig<LoanConfigDTO> getLoanConfig(@PathVariable Integer id) {
+        return configService.getLoanConfig(id);
+    }
+
+    @GetMapping("/savings/{id}")
+    @PreAuthorize("hasAnyRole('MANAGER', 'DIRECTOR')")
+    public DetailConfig<SavingConfigDTO> getSavingConfig(@PathVariable Integer id) {
+        return configService.getSavingConfig(id);
+    }
+
     @PostMapping("/loan")
     @PreAuthorize("hasRole('MANAGER')")
     public void changeLoanConfig(@RequestBody LoanConfigReq loanConfigReq) {
-        configService.changeLoanConfig(loanConfigReq);
+        configService.createNewLoanConfig(loanConfigReq);
     }
 
     @GetMapping("/saving")
@@ -38,7 +50,7 @@ public class ConfigController {
     @PostMapping("/saving")
     @PreAuthorize("hasRole('MANAGER')")
     public void changeSavingConfig(@RequestBody SavingConfigReq savingConfigReq) {
-        configService.changeSavingConfig(savingConfigReq);
+        configService.createNewSavingConfig(savingConfigReq);
     }
 
     @GetMapping("/resolved")

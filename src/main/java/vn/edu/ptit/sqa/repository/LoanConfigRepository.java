@@ -7,5 +7,5 @@ import vn.edu.ptit.sqa.entity.config.LoanConfig;
 import java.util.List;
 
 public interface LoanConfigRepository extends JpaRepository<LoanConfig, Integer> {
-    List<LoanConfig> findAllByConfigHistory(ConfigHistory lastConfig);
+    List<LoanConfig> findAllByConfigHistory(ConfigHistory configHistory);
 }

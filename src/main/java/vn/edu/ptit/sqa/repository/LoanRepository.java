@@ -51,7 +51,7 @@ public interface LoanRepository extends JpaRepository<Loan, Long>, JpaSpecificat
     @Query("""
         SELECT new vn.edu.ptit.sqa.model.UncollectedLoanSummary(COUNT(*), SUM(l.remaining))
         FROM Loan l
-        WHERE l.dueDate < CURDATE() AND l.remaining > 0
+        WHERE l.dueDate <= :to AND l.remaining > 0
     """)
-    UncollectedLoanSummary summaryForUncollectedLoan(@Param("from") LocalDate from, @Param("to") LocalDate to);
+    UncollectedLoanSummary summaryForUncollectedLoan(@Param("to") LocalDate to);
 }

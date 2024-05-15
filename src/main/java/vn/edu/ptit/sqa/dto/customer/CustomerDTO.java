@@ -9,6 +9,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public class CustomerDTO {
+    protected Long id;
     protected String firstname;
     protected String lastname;
     protected String idCardNo;
@@ -16,6 +17,7 @@ public class CustomerDTO {
     protected String idCardIssueBy;
 
     public CustomerDTO(Customer customer) {
+        this.id = customer.getId();
         this.firstname = customer.getFirstname();
         this.lastname = customer.getLastname();
 

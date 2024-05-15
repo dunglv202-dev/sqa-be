@@ -36,4 +36,13 @@ public interface ConfigHistoryRepository extends JpaRepository<ConfigHistory, In
         LIMIT 1
     """)
     Optional<ConfigHistory> findLatestApprovedConfig(@Param("configType") ConfigType configType);
+
+    @Modifying
+    @Query("""
+        UPDATE ConfigHistory c
+        SET c.status = vn.edu.ptit.sqa.constant.ConfigStatus.REJECTED
+        WHERE c.status = vn.edu.ptit.sqa.constant.ConfigStatus.PENDING
+        AND c.configType = :#{#exception.configType}
+    """)
+    void setOthersAsRejectedExcept(@Param("exception") ConfigHistory exception);
 }

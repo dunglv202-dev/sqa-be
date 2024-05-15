@@ -14,4 +14,6 @@ public class GeneralReport {
     private BigDecimal lendingAmount;
     private long numberOfSaving;
     private BigDecimal savingDepositAmount;
+    private BigDecimal expectedInterestFromLoans;
+    private BigDecimal expectedInterestPayForSavings;
 }

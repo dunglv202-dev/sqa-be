@@ -7,11 +7,11 @@ import vn.edu.ptit.sqa.entity.config.SavingConfig;
 @Getter
 @Setter
 public class SavingConfigDTO {
-    private int termInMonth;
+    private Integer termInMonth;
     private double yearlyInterestRate;
 
     public SavingConfigDTO(SavingConfig savingConfig) {
-        this.termInMonth = savingConfig.getTermInMonth();
+        this.termInMonth = savingConfig.getTermInMonth() == null ? 0 : savingConfig.getTermInMonth();
         this.yearlyInterestRate = savingConfig.getYearlyInterestRate();
     }
 }
