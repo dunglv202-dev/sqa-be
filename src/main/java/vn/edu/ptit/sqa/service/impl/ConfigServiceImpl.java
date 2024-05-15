@@ -116,7 +116,7 @@ public class ConfigServiceImpl implements ConfigService {
             .build();
     }
 
-    @Override`
+    @Override
     public ResultPage<ConfigHistoryDTO> getAllConfigHistory(Pagination pagination) {
         Sort sort = Sort.by(Sort.Direction.DESC, ConfigHistory_.UPDATED_AT);
 
