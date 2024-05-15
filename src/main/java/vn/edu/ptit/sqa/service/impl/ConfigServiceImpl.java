@@ -109,7 +109,7 @@ public class ConfigServiceImpl implements ConfigService {
             .build();
     }
 
-    @Override
+    @Override`
     public ResultPage<ConfigHistoryDTO> getAllConfigHistory(Pagination pagination) {
         Sort sort = Sort.by(Sort.Direction.DESC, ConfigHistory_.UPDATED_AT);
 
@@ -175,11 +175,5 @@ public class ConfigServiceImpl implements ConfigService {
             .collect(Collectors.toSet());
 
         return configuredTerms.size() == terms.size() && configuredTerms.containsAll(terms);
-    }
-
-    private boolean isConflictedWithOthers(ConfigHistory newConfigHistory) {
-        ConfigType configType = newConfigHistory.getConfigType();
-        LocalDate startDate = newConfigHistory.getStartDate();
-        return configHistoryRepository.existsByConfigTypeAndStartDate(configType, startDate);
     }
 }
